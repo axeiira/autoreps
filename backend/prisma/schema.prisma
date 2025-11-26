@@ -1,0 +1,69 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
+}
+
+model User {
+  id             Int              @id @default(autoincrement())
+  name           String
+  email          String           @unique
+  password       String
+  profile        UserProfile?
+  plan           TrainingPlan?
+  createdAt      DateTime         @default(now())
+  WorkoutSession WorkoutSession[]
+  streak         UserStreak?
+
+}
+
+model WorkoutSession {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  reps        Int
+  validReps   Int
+  invalidReps Int
+  durationSec Int
+  date        DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model UserProfile {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  age             Int
+  weight          Float
+  primaryGoal     String
+  experienceLevel String
+  updatedAt       DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model TrainingPlan {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique
+  planName   String
+  reps       Int
+  sets       Int
+  formStatus String // Good, Bad, Average
+  updatedAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model UserStreak {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @unique
+  currentStreak Int       @default(0)
+  longestStreak Int       @default(0)
+  lastWorkout   DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+}
+
