@@ -7,7 +7,7 @@ class UserRepository {
   final ApiClient _apiClient;
 
   UserRepository({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   /// Get current user info (from User table, not UserProfile)
   Future<User> getCurrentUser() async {

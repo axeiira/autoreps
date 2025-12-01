@@ -27,11 +27,7 @@ class _UserPlanPageState extends State<UserPlanPage> {
     'Improve endurance',
   ];
 
-  final List<String> _levels = [
-    'Beginner',
-    'Intermediate',
-    'Advanced',
-  ];
+  final List<String> _levels = ['Beginner', 'Intermediate', 'Advanced'];
 
   @override
   void dispose() {
@@ -47,14 +43,20 @@ class _UserPlanPageState extends State<UserPlanPage> {
     // Validate that goal and level are selected
     if (_primaryGoal == null || _primaryGoal!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a fitness goal'), backgroundColor: Colors.orange),
+        const SnackBar(
+          content: Text('Please select a fitness goal'),
+          backgroundColor: Colors.orange,
+        ),
       );
       return;
     }
 
     if (_situpLevel == null || _situpLevel!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select your experience level'), backgroundColor: Colors.orange),
+        const SnackBar(
+          content: Text('Please select your experience level'),
+          backgroundColor: Colors.orange,
+        ),
       );
       return;
     }
@@ -75,7 +77,10 @@ class _UserPlanPageState extends State<UserPlanPage> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile saved successfully!'), backgroundColor: Colors.green),
+        const SnackBar(
+          content: Text('Profile saved successfully!'),
+          backgroundColor: Colors.green,
+        ),
       );
 
       // Navigate back to home
@@ -88,7 +93,10 @@ class _UserPlanPageState extends State<UserPlanPage> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e'), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) {
@@ -115,7 +123,10 @@ class _UserPlanPageState extends State<UserPlanPage> {
                   onPressed: () => Navigator.pushNamed(context, '/home'),
                 ),
                 const SizedBox(width: 8),
-                const Text('Home', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                const Text(
+                  'Home',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
               ],
             ),
 
@@ -129,21 +140,29 @@ class _UserPlanPageState extends State<UserPlanPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // Age
-                      const Text('Age', style: TextStyle(fontWeight: FontWeight.w600)),
+                      const Text(
+                        'Age',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _ageController,
                         keyboardType: TextInputType.number,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Enter your age',
                         ),
                         validator: (v) {
-                          if (v == null || v.trim().isEmpty) return 'Please enter your age';
+                          if (v == null || v.trim().isEmpty)
+                            return 'Please enter your age';
                           final parsed = int.tryParse(v.trim());
-                          if (parsed == null) return 'Age must be a whole number';
-                          if (parsed <= 0 || parsed > 120) return 'Enter a valid age';
+                          if (parsed == null)
+                            return 'Age must be a whole number';
+                          if (parsed <= 0 || parsed > 120)
+                            return 'Enter a valid age';
                           return null;
                         },
                       ),
@@ -151,21 +170,32 @@ class _UserPlanPageState extends State<UserPlanPage> {
                       const SizedBox(height: 16),
 
                       // Weight
-                      const Text('Weight (kg)', style: TextStyle(fontWeight: FontWeight.w600)),
+                      const Text(
+                        'Weight (kg)',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _weightController,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9]*\.?[0-9]*'))],
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'^[0-9]*\.?[0-9]*'),
+                          ),
+                        ],
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Enter your weight (e.g. 72.5)',
                         ),
                         validator: (v) {
-                          if (v == null || v.trim().isEmpty) return 'Please enter your weight';
+                          if (v == null || v.trim().isEmpty)
+                            return 'Please enter your weight';
                           final parsed = double.tryParse(v.trim());
                           if (parsed == null) return 'Weight must be a number';
-                          if (parsed <= 0 || parsed > 500) return 'Enter a realistic weight';
+                          if (parsed <= 0 || parsed > 500)
+                            return 'Enter a realistic weight';
                           return null;
                         },
                       ),
@@ -173,29 +203,51 @@ class _UserPlanPageState extends State<UserPlanPage> {
                       const SizedBox(height: 16),
 
                       // Primary Fitness Goals
-                      const Text('Primary Fitness Goal', style: TextStyle(fontWeight: FontWeight.w600)),
+                      const Text(
+                        'Primary Fitness Goal',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
                         // ignore: deprecated_member_use
                         value: _primaryGoal,
-                        items: _goals.map((g) => DropdownMenuItem(value: g, child: Text(g))).toList(),
+                        items: _goals
+                            .map(
+                              (g) => DropdownMenuItem(value: g, child: Text(g)),
+                            )
+                            .toList(),
                         onChanged: (v) => setState(() => _primaryGoal = v),
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
-                        validator: (v) => v == null || v.isEmpty ? 'Please select a goal' : null,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (v) => v == null || v.isEmpty
+                            ? 'Please select a goal'
+                            : null,
                       ),
 
                       const SizedBox(height: 16),
 
-                      // Sit Up Experience Level
-                      const Text('Sit Up Experience Level', style: TextStyle(fontWeight: FontWeight.w600)),
+                      // Squat Experience Level
+                      const Text(
+                        'Squat Experience Level',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
                         // ignore: deprecated_member_use
                         value: _situpLevel,
-                        items: _levels.map((l) => DropdownMenuItem(value: l, child: Text(l))).toList(),
+                        items: _levels
+                            .map(
+                              (l) => DropdownMenuItem(value: l, child: Text(l)),
+                            )
+                            .toList(),
                         onChanged: (v) => setState(() => _situpLevel = v),
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
-                        validator: (v) => v == null || v.isEmpty ? 'Please select your level' : null,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (v) => v == null || v.isEmpty
+                            ? 'Please select your level'
+                            : null,
                       ),
 
                       const SizedBox(height: 24),
@@ -209,9 +261,14 @@ class _UserPlanPageState extends State<UserPlanPage> {
                               ? const SizedBox(
                                   height: 20,
                                   width: 20,
-                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
                                 )
-                              : const Text('Save', style: TextStyle(fontSize: 16)),
+                              : const Text(
+                                  'Save',
+                                  style: TextStyle(fontSize: 16),
+                                ),
                         ),
                       ),
                     ],

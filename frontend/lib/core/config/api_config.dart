@@ -4,12 +4,12 @@ class ApiConfig {
   static const Environment environment = Environment.development;
 
   /// Base URL for the API
-  /// 
+  ///
   /// For development:
   /// - Android Emulator: Use 10.0.2.2 to access host machine's localhost
   /// - iOS Simulator: Use localhost or 127.0.0.1
   /// - Physical Device: Use your computer's local IP address (e.g., 192.168.1.x)
-  /// 
+  ///
   /// For production: Use your deployed backend URL
   static String get baseUrl => _getBaseUrl();
 
@@ -21,10 +21,10 @@ class ApiConfig {
         // For iOS simulator or web, use localhost
         // For physical device, replace with your computer's IP
         return 'https://568306b77fbf.ngrok-free.app';
-      
+
       case Environment.staging:
         return 'https://568306b77fbf.ngrok-free.app';
-      
+
       case Environment.production:
         return 'https://568306b77fbf.ngrok-free.app';
     }
@@ -52,8 +52,4 @@ class ApiConfig {
 }
 
 /// Environment enum
-enum Environment {
-  development,
-  staging,
-  production,
-}
+enum Environment { development, staging, production }

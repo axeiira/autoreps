@@ -6,7 +6,7 @@ import '../config/api_config.dart';
 class ApiClient {
   // Singleton instance
   static final ApiClient _instance = ApiClient._internal();
-  
+
   factory ApiClient() {
     return _instance;
   }
@@ -46,8 +46,9 @@ class ApiClient {
     Map<String, String>? queryParams,
     bool requiresAuth = true,
   }) async {
-    final uri = Uri.parse('${ApiConfig.baseUrl}$endpoint')
-        .replace(queryParameters: queryParams);
+    final uri = Uri.parse(
+      '${ApiConfig.baseUrl}$endpoint',
+    ).replace(queryParameters: queryParams);
 
     return await _client
         .get(uri, headers: _getHeaders(includeAuth: requiresAuth))

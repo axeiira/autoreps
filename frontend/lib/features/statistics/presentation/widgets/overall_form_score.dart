@@ -22,10 +22,7 @@ class OverallFormScore extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
       ),
       child: Column(
         children: [
@@ -85,7 +82,11 @@ class OverallFormScore extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildScoreStat('Excellent', _getExcellentCount(), const Color(0xFF94B900)),
+        _buildScoreStat(
+          'Excellent',
+          _getExcellentCount(),
+          const Color(0xFF94B900),
+        ),
         _buildScoreStat('Good', _getGoodCount(), const Color(0xFFC7F705)),
         _buildScoreStat('Needs Work', _getNeedsWorkCount(), Colors.orange),
       ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_autoreps/widgets/app_scaffold.dart';
 import 'package:flutter_autoreps/features/home/data/repositories/workout_repository.dart';
-import 'package:flutter_autoreps/features/home/data/models/workout_session.dart' as model;
+import 'package:flutter_autoreps/features/home/data/models/workout_session.dart'
+    as model;
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -58,28 +59,26 @@ class _HistoryPageState extends State<HistoryPage> {
         child: _isLoading
             ? _buildLoadingState()
             : _error != null
-                ? _buildErrorState()
-                : _sessions.isEmpty
-                    ? _buildEmptyState()
-                    : ListView.builder(
-                        padding: const EdgeInsets.all(20),
-                        itemCount: _sessions.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: _WorkoutSessionCard(session: _sessions[index]),
-                          );
-                        },
-                      ),
+            ? _buildErrorState()
+            : _sessions.isEmpty
+            ? _buildEmptyState()
+            : ListView.builder(
+                padding: const EdgeInsets.all(20),
+                itemCount: _sessions.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: _WorkoutSessionCard(session: _sessions[index]),
+                  );
+                },
+              ),
       ),
     );
   }
 
   Widget _buildLoadingState() {
     return const Center(
-      child: CircularProgressIndicator(
-        color: Color(0xFFC7F705),
-      ),
+      child: CircularProgressIndicator(color: Color(0xFFC7F705)),
     );
   }
 
@@ -112,10 +111,7 @@ class _HistoryPageState extends State<HistoryPage> {
             ),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: _loadHistory,
-            child: const Text('Retry'),
-          ),
+          ElevatedButton(onPressed: _loadHistory, child: const Text('Retry')),
         ],
       ),
     );
@@ -126,11 +122,7 @@ class _HistoryPageState extends State<HistoryPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.history,
-            size: 80,
-            color: Colors.white.withOpacity(0.3),
-          ),
+          Icon(Icons.history, size: 80, color: Colors.white.withOpacity(0.3)),
           const SizedBox(height: 16),
           Text(
             'No workout history yet',
@@ -163,10 +155,10 @@ class _WorkoutSessionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // Calculate form score percentage from valid vs invalid reps
     final totalAttempts = session.validReps + session.invalidReps;
-    final formScore = totalAttempts > 0 
-        ? ((session.validReps / totalAttempts) * 100).round() 
+    final formScore = totalAttempts > 0
+        ? ((session.validReps / totalAttempts) * 100).round()
         : 0;
-    
+
     // Estimate sets (since we don't have this in the API, use a rough calculation)
     final estimatedSets = (session.reps / 15).ceil().clamp(1, 5);
 
@@ -174,10 +166,7 @@ class _WorkoutSessionCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +199,10 @@ class _WorkoutSessionCard extends StatelessWidget {
               ),
               // Form score badge
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: _getFormScoreColor(formScore).withOpacity(0.15),
                   borderRadius: BorderRadius.circular(8),
@@ -241,7 +233,7 @@ class _WorkoutSessionCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          
+
           // Stats row
           Row(
             children: [
@@ -261,7 +253,9 @@ class _WorkoutSessionCard extends StatelessWidget {
                 child: _buildStatItem(
                   icon: Icons.timer_outlined,
                   label: 'Duration',
-                  value: _formatDuration(Duration(seconds: session.durationSec)),
+                  value: _formatDuration(
+                    Duration(seconds: session.durationSec),
+                  ),
                 ),
               ),
               Container(
@@ -290,11 +284,7 @@ class _WorkoutSessionCard extends StatelessWidget {
   }) {
     return Column(
       children: [
-        Icon(
-          icon,
-          color: const Color(0xFFC7F705),
-          size: 20,
-        ),
+        Icon(icon, color: const Color(0xFFC7F705), size: 20),
         const SizedBox(height: 6),
         Text(
           value,
@@ -328,7 +318,20 @@ class _WorkoutSessionCard extends StatelessWidget {
     } else if (sessionDate == yesterday) {
       return 'Yesterday';
     } else {
-      final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      final months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
       return '${months[date.month - 1]} ${date.day}, ${date.year}';
     }
   }

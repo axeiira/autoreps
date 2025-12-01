@@ -6,7 +6,8 @@ import 'package:flutter_autoreps/features/auth/data/models/auth_response.dart';
 class AuthRepository {
   final ApiClient _apiClient;
 
-  AuthRepository({ApiClient? apiClient}) : _apiClient = apiClient ?? ApiClient();
+  AuthRepository({ApiClient? apiClient})
+    : _apiClient = apiClient ?? ApiClient();
 
   /// Register a new user
   Future<User> register({
@@ -17,11 +18,7 @@ class AuthRepository {
     try {
       final response = await _apiClient.post(
         '${ApiConfig.auth}/register',
-        body: {
-          'name': name,
-          'email': email,
-          'password': password,
-        },
+        body: {'name': name, 'email': email, 'password': password},
         requiresAuth: false,
       );
 
@@ -46,20 +43,17 @@ class AuthRepository {
     try {
       final response = await _apiClient.post(
         '${ApiConfig.auth}/login',
-        body: {
-          'email': email,
-          'password': password,
-        },
+        body: {'email': email, 'password': password},
         requiresAuth: false,
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         final authResponse = AuthResponse.fromJson(data);
-        
+
         // Store the token in the API client for future requests
         _apiClient.setAuthToken(authResponse.token);
-        
+
         return authResponse;
       } else {
         final error = jsonDecode(response.body);

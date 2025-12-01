@@ -7,7 +7,7 @@ class WorkoutRepository {
   final ApiClient _apiClient;
 
   WorkoutRepository({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   /// Get workout history
   Future<List<WorkoutSession>> getWorkoutHistory() async {
@@ -19,10 +19,16 @@ class WorkoutRepository {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as List;
-        return data.map((json) => WorkoutSession.fromJson(json as Map<String, dynamic>)).toList();
+        return data
+            .map(
+              (json) => WorkoutSession.fromJson(json as Map<String, dynamic>),
+            )
+            .toList();
       } else {
         final error = jsonDecode(response.body);
-        throw WorkoutException(error['error'] ?? 'Failed to get workout history');
+        throw WorkoutException(
+          error['error'] ?? 'Failed to get workout history',
+        );
       }
     } catch (e) {
       if (e is WorkoutException) rethrow;
@@ -42,7 +48,11 @@ class WorkoutRepository {
     DateTime? previousDate;
 
     for (var session in sortedSessions) {
-      final sessionDate = DateTime(session.date.year, session.date.month, session.date.day);
+      final sessionDate = DateTime(
+        session.date.year,
+        session.date.month,
+        session.date.day,
+      );
       final today = DateTime.now();
       final todayDate = DateTime(today.year, today.month, today.day);
 

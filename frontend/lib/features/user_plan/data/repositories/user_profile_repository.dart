@@ -7,7 +7,7 @@ class UserProfileRepository {
   final ApiClient _apiClient;
 
   UserProfileRepository({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   /// Get user profile
   Future<UserProfile?> getProfile() async {

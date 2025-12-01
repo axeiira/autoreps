@@ -22,10 +22,13 @@ class AppScaffold extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 72,
         elevation: 0,
-  centerTitle: true,
-  // increase leading slot width so the 'AUTOREPS' label can fit on one line
-  leadingWidth: 120,
-        title: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+        centerTitle: true,
+        // increase leading slot width so the 'AUTOREPS' label can fit on one line
+        leadingWidth: 120,
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+        ),
         leading: const Padding(
           padding: EdgeInsets.only(left: 30.0),
           child: SizedBox(
@@ -63,12 +66,18 @@ class AppScaffold extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 30.0),
-            child: SvgPicture.asset('lib/assets/shared/Logo.svg', width: 48, height: 17),
+            child: SvgPicture.asset(
+              'lib/assets/shared/Logo.svg',
+              width: 48,
+              height: 17,
+            ),
           ),
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(16),
+            ),
           ),
         ),
         shape: const RoundedRectangleBorder(
@@ -76,7 +85,9 @@ class AppScaffold extends StatelessWidget {
         ),
       ),
       body: body,
-      bottomNavigationBar: showBottomNav ? AppNavBar(currentIndex: currentNavIndex) : null,
+      bottomNavigationBar: showBottomNav
+          ? AppNavBar(currentIndex: currentNavIndex)
+          : null,
     );
   }
 }

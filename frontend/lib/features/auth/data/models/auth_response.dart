@@ -3,10 +3,7 @@ class AuthResponse {
   final String token;
   final User user;
 
-  AuthResponse({
-    required this.token,
-    required this.user,
-  });
+  AuthResponse({required this.token, required this.user});
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
     return AuthResponse(
@@ -16,10 +13,7 @@ class AuthResponse {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'token': token,
-      'user': user.toJson(),
-    };
+    return {'token': token, 'user': user.toJson()};
   }
 }
 
@@ -52,7 +46,9 @@ class User {
       email: json['email'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       age: json['age'] as int?,
-      weight: json['weight'] != null ? (json['weight'] as num).toDouble() : null,
+      weight: json['weight'] != null
+          ? (json['weight'] as num).toDouble()
+          : null,
       goal: json['goal'] as String?,
       experienceLevel: json['experienceLevel'] as String?,
     );

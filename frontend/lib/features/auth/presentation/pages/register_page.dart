@@ -59,7 +59,10 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e'), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) {
@@ -81,10 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 24),
-                SvgPicture.asset(
-                  'lib/assets/shared/Logo.svg',
-                  height: 100,
-                ),
+                SvgPicture.asset('lib/assets/shared/Logo.svg', height: 100),
                 const SizedBox(height: 24),
                 TextFormField(
                   controller: _name,
@@ -120,11 +120,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Password',
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  validator: (v) => (v == null || v.length < 6) ? 'Min 6 characters' : null,
+                  validator: (v) =>
+                      (v == null || v.length < 6) ? 'Min 6 characters' : null,
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
@@ -134,8 +140,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Confirm Password',
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscureConfirmPassword ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                      icon: Icon(
+                        _obscureConfirmPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed: () => setState(
+                        () =>
+                            _obscureConfirmPassword = !_obscureConfirmPassword,
+                      ),
                     ),
                   ),
                   validator: (v) {
@@ -160,7 +173,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 12),
                 TextButton(
-                  onPressed: () => Navigator.of(context).pushReplacementNamed(LoginPage.routeName),
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).pushReplacementNamed(LoginPage.routeName),
                   child: const Text('Already have an account? Sign in'),
                 ),
               ],

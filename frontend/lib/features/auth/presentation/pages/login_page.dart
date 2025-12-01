@@ -43,10 +43,9 @@ class _LoginPageState extends State<LoginPage> {
 
       // Store token and user data here if needed (e.g., SharedPreferences)
       // For now, navigate to home page
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        HomePage.routeName,
-        (route) => false,
-      );
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(HomePage.routeName, (route) => false);
     } on AuthException catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -55,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e'), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text('An error occurred: $e'),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       if (mounted) {
@@ -77,15 +79,15 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 24),
-                SvgPicture.asset(
-                  'lib/assets/shared/Logo.svg',
-                  height: 100,
-                ),
+                SvgPicture.asset('lib/assets/shared/Logo.svg', height: 100),
                 const SizedBox(height: 24),
                 TextFormField(
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Enter email';
                     final re = RegExp(r'^[^@]+@[^@]+\.[^@]+');
@@ -101,11 +103,14 @@ class _LoginPageState extends State<LoginPage> {
                     labelText: 'Password',
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
+                      icon: Icon(
+                        _obscure ? Icons.visibility_off : Icons.visibility,
+                      ),
                       onPressed: () => setState(() => _obscure = !_obscure),
                     ),
                   ),
-                  validator: (v) => (v == null || v.length < 6) ? 'Min 6 characters' : null,
+                  validator: (v) =>
+                      (v == null || v.length < 6) ? 'Min 6 characters' : null,
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
@@ -123,7 +128,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 12),
                 TextButton(
-                  onPressed: () => Navigator.of(context).pushNamed(RegisterPage.routeName),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(RegisterPage.routeName),
                   child: const Text('Create account'),
                 ),
               ],

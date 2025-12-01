@@ -16,10 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'Autoreps',
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.dark, 
+      themeMode: ThemeMode.dark,
       onGenerateRoute: AppRouter.generate,
       initialRoute: LoginPage.routeName,
     );
   }
 }
-

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_autoreps/widgets/app_scaffold.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -14,7 +15,29 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _soundEnabled = true;
   bool _vibrationEnabled = true;
   double _countdownDuration = 3.0;
-  String _cameraPosition = 'Back';
+  String _cameraPosition = 'Front';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _countdownDuration = prefs.getDouble('countdown_duration') ?? 3.0;
+      _cameraPosition = prefs.getString('camera_position') ?? 'Front';
+    });
+  }
+
+  Future<void> _saveCountdownDuration(double value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('countdown_duration', value);
+    setState(() {
+      _countdownDuration = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
-                
+
                 // General Section
                 _buildSectionTitle('General'),
                 const SizedBox(height: 12),
@@ -39,21 +62,24 @@ class _SettingsPageState extends State<SettingsPage> {
                       title: 'Notifications',
                       subtitle: 'Receive workout reminders',
                       value: _notificationsEnabled,
-                      onChanged: (value) => setState(() => _notificationsEnabled = value),
+                      onChanged: (value) =>
+                          setState(() => _notificationsEnabled = value),
                     ),
                     _buildDivider(),
                     _buildSwitchTile(
                       title: 'Sound',
                       subtitle: 'Enable audio feedback',
                       value: _soundEnabled,
-                      onChanged: (value) => setState(() => _soundEnabled = value),
+                      onChanged: (value) =>
+                          setState(() => _soundEnabled = value),
                     ),
                     _buildDivider(),
                     _buildSwitchTile(
                       title: 'Vibration',
                       subtitle: 'Haptic feedback on actions',
                       value: _vibrationEnabled,
-                      onChanged: (value) => setState(() => _vibrationEnabled = value),
+                      onChanged: (value) =>
+                          setState(() => _vibrationEnabled = value),
                     ),
                   ],
                 ),
@@ -72,7 +98,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       min: 1.0,
                       max: 10.0,
                       divisions: 9,
-                      onChanged: (value) => setState(() => _countdownDuration = value),
+                      onChanged: (value) => _saveCountdownDuration(value),
                     ),
                     _buildDivider(),
                     _buildDropdownTile(
@@ -80,7 +106,11 @@ class _SettingsPageState extends State<SettingsPage> {
                       subtitle: 'Select camera position',
                       value: _cameraPosition,
                       items: ['Front', 'Back'],
-                      onChanged: (value) => setState(() => _cameraPosition = value ?? 'Back'),
+                      onChanged: (value) async {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setString('camera_position', value ?? 'Front');
+                        setState(() => _cameraPosition = value ?? 'Front');
+                      },
                     ),
                   ],
                 ),
@@ -168,9 +198,7 @@ class _SettingsPageState extends State<SettingsPage> {
           width: 2,
         ),
       ),
-      child: Column(
-        children: children,
-      ),
+      child: Column(children: children),
     );
   }
 
@@ -324,10 +352,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             underline: Container(),
             items: items.map((String item) {
-              return DropdownMenuItem<String>(
-                value: item,
-                child: Text(item),
-              );
+              return DropdownMenuItem<String>(value: item, child: Text(item));
             }).toList(),
             onChanged: onChanged,
           ),
@@ -375,10 +400,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             if (subtitle == null)
-              Icon(
-                Icons.chevron_right,
-                color: Colors.white.withOpacity(0.4),
-              ),
+              Icon(Icons.chevron_right, color: Colors.white.withOpacity(0.4)),
           ],
         ),
       ),
@@ -406,16 +428,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           title: const Text(
             'Clear Workout History?',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
           ),
           content: const Text(
             'This will permanently delete all your workout history. This action cannot be undone.',
-            style: TextStyle(
-              color: Colors.white70,
-            ),
+            style: TextStyle(color: Colors.white70),
           ),
           actions: [
             TextButton(
@@ -436,10 +453,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 );
               },
-              child: const Text(
-                'Clear',
-                style: TextStyle(color: Colors.red),
-              ),
+              child: const Text('Clear', style: TextStyle(color: Colors.red)),
             ),
           ],
         );

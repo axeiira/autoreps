@@ -17,19 +17,19 @@ class WeeklyScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(values.length == 7, 'WeeklyScore requires exactly 7 values (Sun-Sat)');
-    
+    assert(
+      values.length == 7,
+      'WeeklyScore requires exactly 7 values (Sun-Sat)',
+    );
+
     final maxValue = values.reduce((a, b) => a > b ? a : b);
-    
+
     return Container(
       width: 342,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.2),
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class WeeklyScore extends StatelessWidget {
       final value = values[index];
       final heightPercent = maxValue > 0 ? value / maxValue : 0.0;
       final barHeight = 150 * heightPercent;
-      
+
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
