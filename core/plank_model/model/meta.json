@@ -1,0 +1,28 @@
+{
+  "feature_columns": [
+    "left_shoulder_x_rel",
+    "left_shoulder_y_rel",
+    "right_shoulder_x_rel",
+    "right_shoulder_y_rel",
+    "left_hip_x_rel",
+    "left_hip_y_rel",
+    "right_hip_x_rel",
+    "right_hip_y_rel",
+    "left_knee_x_rel",
+    "left_knee_y_rel",
+    "right_knee_x_rel",
+    "right_knee_y_rel",
+    "left_ankle_x_rel",
+    "left_ankle_y_rel",
+    "right_ankle_x_rel",
+    "right_ankle_y_rel",
+    "left_hip_angle_norm",
+    "right_hip_angle_norm",
+    "body_angle_norm"
+  ],
+  "label_mapping": {
+    "0": "C",
+    "1": "H",
+    "2": "L"
+  }
+}
